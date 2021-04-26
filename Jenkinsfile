@@ -2,7 +2,7 @@ pipeline {
 
     environment {
         registry = "491551051/ense375-final"
-        registryCredential = 'docker-pwd'
+        registryCredential = 'dockerHub'
         dockerImage = '';
     }
 
