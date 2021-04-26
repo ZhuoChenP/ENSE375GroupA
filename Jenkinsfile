@@ -1,10 +1,10 @@
 pipeline {
 
-    environment {
-        registry = "rishabhprasad03/ense375group-a"
-        registryCredential = 'dockerhub'
-        dockerImage = '';
-    }
+    // environment {
+    //     registry = "rishabhprasad03/ense375group-a"
+    //     registryCredential = 'dockerhub'
+    //     dockerImage = '';
+    // }
 
     agent any
     stages {
@@ -13,7 +13,7 @@ pipeline {
             steps{
                 cleanWs()
                 checkout scm: [$class: 'GitSCM', branches: [[name: '*/master']],userRemoteConfigs:
-                [[credentialsId: 'github-ssh-key', url: 'git@github.com:rishabhprasad/ENSE375GroupA.git']]]
+                [[credentialsId: 'github-ssh-key', url: 'https://github.com/ZhuoChenP/ENSE375GroupA.git']]]
             }
         }
 
@@ -30,21 +30,14 @@ pipeline {
         }
         
         stage('Building image') {
-            steps{
-                script {
-                    dockerImage = docker.build registry
-                }
-            }
+            sh 'docker build -t 491551051/ense375-final:1.0.0'
         }
 
-        stage('Deploy image') {
-            steps{
-                script {
-                    docker.withRegistry( '', registryCredential) {
-                        dockerImage.push()
-                    }
-                }
+        stage('Push Docker image') {
+            withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerHubPwd')]) {
+                sh "docker login -u 491551051 -p ${dockerHubPwd}"
             }
+            sh 'docker push 491551051/ense375-final:1.0.0'
         }
     }
 
