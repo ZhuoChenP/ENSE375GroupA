@@ -1,7 +1,7 @@
 pipeline {
 
     environment {
-        registry = "zhuochenp/ense375-final"
+        registry = "zhuochenp/ense375-final:1.0.0"
         registryCredential = 'dockerHub'
         dockerImage = '';
     }
