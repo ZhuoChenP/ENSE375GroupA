@@ -40,7 +40,7 @@ pipeline {
         stage('Push Docker image') {
             steps{
                 script{
-                    docker.withRegistry('https://hub.docker.com/repository/docker/zhuochenp/ense375-final',registryCredential) {
+                    docker.withRegistry('',registryCredential) {
                     dockerImage.push()
                     }
                 }
